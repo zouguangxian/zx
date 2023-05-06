@@ -1,5 +1,5 @@
 {
-  "name": "zx",
+  "name": "@zouguangxian/zx",
   "version": "7.2.2",
   "description": "A tool for writing better scripts.",
   "type": "module",
@@ -97,7 +97,7 @@
     "uvu": "^0.5.6"
   },
   "publishConfig": {
-    "registry": "https://wombat-dressing-room.appspot.com"
+    "registry": "https://npm.pkg.github.com"
   },
   "files": [
     "build",
@@ -109,7 +109,7 @@
     "singleQuote": true,
     "endOfLine": "lf"
   },
-  "repository": "google/zx",
+  "repository": "zouguangxian/zx",
   "author": "Anton Medvedev <anton@medv.io>",
   "license": "Apache-2.0"
 }
