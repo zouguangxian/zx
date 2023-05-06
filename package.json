@@ -25,11 +25,25 @@
     }
   },
   "exports": {
-    ".": "./build/index.js",
-    "./globals": "./build/globals.js",
-    "./experimental": "./build/experimental.js",
-    "./cli": "./build/cli.js",
-    "./core": "./build/core.js",
+    ".": {
+      "import": "./build/index.js",
+      "require": "./build-cjs/index.cjs"
+    },
+    "./globals": {
+      "import": "./build/globals.js",
+      "require": "./build-cjs/globals.cjs"
+    },
+    "./experimental": {
+      "import": "./build/experimental.js",
+      "require": "./build-cjs/experimental.cjs"
+    },
+    "./cli": {
+      "import": "./build/cli.js"
+    },
+    "./core": {
+      "import": "./build/core.js",
+      "require": "./build-cjs/core.cjs"
+    },
     "./package.json": "./package.json"
   },
   "bin": {
@@ -41,7 +55,10 @@
   "scripts": {
     "fmt": "prettier --write .",
     "fmt:check": "prettier --check .",
-    "build": "tsc --project tsconfig.prod.json",
+    "build": "npm run build-default && npm run build-mjs && npm run build-cjs",
+    "build-default": "tsc --project tsconfig.prod.json",
+    "build-mjs": "tsup --target esnext --format esm --out-dir build-mjs src/index.ts src/globals.ts src/experimental.ts src/core.ts src/cli.ts",
+    "build-cjs": "tsup --target esnext --format cjs --out-dir build-cjs src/index.ts src/globals.ts src/experimental.ts src/core.ts",
     "build:check": "tsc",
     "test": "npm run build && uvu test -i fixtures",
     "test:types": "tsd",
@@ -70,9 +87,12 @@
   "devDependencies": {
     "@stryker-mutator/core": "^6.4.2",
     "c8": "^7.13.0",
+    "esbuild": "^0.17.18",
     "madge": "^6.0.0",
     "prettier": "^2.8.8",
+    "ts-node": "^10.9.1",
     "tsd": "^0.28.1",
+    "tsup": "^6.7.0",
     "typescript": "^5.0.4",
     "uvu": "^0.5.6"
   },
@@ -81,6 +101,7 @@
   },
   "files": [
     "build",
+    "build-cjs",
     "zx.js"
   ],
   "prettier": {
